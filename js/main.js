@@ -42,13 +42,14 @@ function save() {
     let todo = [];
     let completeTodo = [];
 
-        for (let i = 0; i < todoItems.length; i++) {
-            todo.push(todoItems[i].querySelector('.todo-text').textContent);
-        }
-        for (let i = 0; i < completeItems.length; i++) {
-            completeTodo.push(completeItems[i].querySelector('.todo-text').textContent);
-        }
+        function pushValue(list, arr) {
+            for (let i = 0; i < list.length; i++) {
+                arr.push(list[i].querySelector('.todo-text').textContent);
+            }
+        } 
 
+    pushValue(todoItems, todo);
+    pushValue(completeItems, completeTodo);
     localStorage.setItem('todo', todo);
     localStorage.setItem('completeTodo', completeTodo);
 }
@@ -113,21 +114,22 @@ inputPlus.addEventListener('click', e => {
 (function getDataOfLS() {
     let todo = localStorage.getItem('todo').split(',');
     let completeTodo = localStorage.getItem('completeTodo').split(',');
-    if (todo[0] !== '') {
-        for (let i = 0; i < todo.length; i++) {
-            let listItem = createElement(todo[i]);
 
-            ulTodo.appendChild(listItem);
-            todoApp.listener(listItem);
+        function showDataItems(list) {
+            if (list[0] !== '') {
+                for (let i = 0; i < list.length; i++) {
+                    let listItem = createElement(list[i]);
+                    if (list === completeTodo) {
+                        listItem.classList.add('compl');
+                        ulTodoCompleted.appendChild(listItem);
+                    } else {
+                        ulTodo.appendChild(listItem);
+                    }
+                    todoApp.listener(listItem);
+                }
+            } 
         }
-    } 
-    if (completeTodo[0] !== '') {
-        for (let i = 0; i < completeTodo.length; i++) {
-            let listItem = createElement(completeTodo[i]);
-
-            ulTodoCompleted.appendChild(listItem);
-            listItem.classList.add('compl');
-            todoApp.listener(listItem);
-        }
-    } 
+        
+    showDataItems(todo);
+    showDataItems(completeTodo);
 })();
