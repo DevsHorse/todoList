@@ -113,8 +113,6 @@ inputPlus.addEventListener('click', e => {
 (function getDataOfLS() {
     let todo = localStorage.getItem('todo').split(',');
     let completeTodo = localStorage.getItem('completeTodo').split(',');
-    console.log(todo);
-    console.log(completeTodo);
     if (todo[0] !== '') {
         for (let i = 0; i < todo.length; i++) {
             let listItem = createElement(todo[i]);
