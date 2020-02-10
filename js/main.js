@@ -113,13 +113,17 @@ inputPlus.addEventListener('click', e => {
 (function getDataOfLS() {
     let todo = localStorage.getItem('todo').split(',');
     let completeTodo = localStorage.getItem('completeTodo').split(',');
-
+    console.log(todo);
+    console.log(completeTodo);
+    if (todo[0] !== '') {
         for (let i = 0; i < todo.length; i++) {
             let listItem = createElement(todo[i]);
 
             ulTodo.appendChild(listItem);
             todoApp.listener(listItem);
         }
+    } 
+    if (completeTodo[0] !== '') {
         for (let i = 0; i < completeTodo.length; i++) {
             let listItem = createElement(completeTodo[i]);
 
@@ -127,4 +131,5 @@ inputPlus.addEventListener('click', e => {
             listItem.classList.add('compl');
             todoApp.listener(listItem);
         }
+    } 
 })();
