@@ -1,7 +1,6 @@
 'use strict';
 
 const input = document.querySelector('.header-input'),
-      inputPlus = document.getElementById('add'),
       ulTodo = document.getElementById('todo'),
       ulTodoCompleted = document.getElementById('completed');
 
@@ -9,7 +8,7 @@ const input = document.querySelector('.header-input'),
     Function for create li elements 
 */
 
-function createElement(text) {
+function createTodoElement(text) {
     let li = document.createElement('li'),
         span = document.createElement('span'),
         div = document.createElement('div'),
@@ -60,7 +59,7 @@ function save() {
 
 let todoApp = {
     setNewTodo() {
-        let listItem = createElement(input.value);
+        let listItem = createTodoElement(input.value);
 
             if (input.value) {
                 ulTodo.appendChild(listItem);
@@ -102,6 +101,8 @@ let todoApp = {
     input's listener 
 */
 
+const inputPlus = document.getElementById('add');
+
 inputPlus.addEventListener('click', e => {
     e.preventDefault();
     todoApp.setNewTodo.call(todoApp);
@@ -110,15 +111,14 @@ inputPlus.addEventListener('click', e => {
 /*
     function for geting data of localStorage 
 */
-
-(function getDataOfLS() {
+window.addEventListener('load', function() {
     let todo = localStorage.getItem('todo').split(',');
     let completeTodo = localStorage.getItem('completeTodo').split(',');
 
         function showDataItems(list) {
             if (list[0] !== '') {
                 for (let i = 0; i < list.length; i++) {
-                    let listItem = createElement(list[i]);
+                    let listItem = createTodoElement(list[i]);
                     if (list === completeTodo) {
                         listItem.classList.add('compl');
                         ulTodoCompleted.appendChild(listItem);
@@ -129,7 +129,7 @@ inputPlus.addEventListener('click', e => {
                 }
             } 
         }
-        
+
     showDataItems(todo);
     showDataItems(completeTodo);
-})();
+});
